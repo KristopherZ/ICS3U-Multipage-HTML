@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" href="image/icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <title>Machine Learning</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <a href="index.html">
+    <div style="background-color: rgb(16,14,13);position: relative;color: white;">
+        <img src="image/title.png" style="height:100px;"><img src="image/title.png" style="height: 100px;transform: scaleX(-1); position: absolute; right: 0%;">
+        <div style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);"><span style="font-size: 50px;"><b>Machine Learning</b></span></div>
+    </div>
+    </a>
+    <!--Nav bar-->
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="intro.html">Introduction</a>
+        <a href="Algorithm.html">Algorithm</a>
+        <a href="app.html">Applications</a>
+        <span style="float:right;"><a href="Reference.html">Reference</a></span>
+    </div>
+    <!--Article-->
+    <div style="padding:0 30px">
+        <h1>Algorithm</h1>
+        <h2>1.Deep Analysis of 'Best Fit Line'</h2>
+        <iframe scrolling="no"
+        src="https://www.geogebra.org/classic/NQRpPRwg"
+        width="1000px"
+        height="600px"
+        style="border:0px;">
+        </iframe>
+        <p>Hope you've play around the best fit line this last section and enjoy it. In mathematics, we called this linear regression, which is useful in many area.<br>
+            In mathematics, we have the equation for linear regression:<br>
+            The line is $$y=Ax+B$$
+            where $$A=\dfrac{\left( \sum y\right) \left( \Sigma x^{2}\right) -\left( \Sigma x\right) \left( \sum xy\right) }{n\left( \Sigma x^{2}\right) -\left( \Sigma x\right) ^{2}}, 
+            B=\dfrac{n\left( \Sigma xy\right) -\left( \sum x\right) \left( \sum y\right) }{n\left( \Sigma x^{2}\right) -\left( \Sigma x\right) ^{2}}$$
+            However, nobody can remember these fomulars, we will learn the derivation of it.
+            <h3>1.1.Partial Derivative</h3>
+            Before we learn the derivation of linear regression, we have to learn partial derivative first. Partial derivative is similar to derivative in single variable calculus, it represent the ratio of 
+            little change in f() respect to one of the variable, say x, we denote $$\frac{\partial f(x,y,z,...)}{\partial x} = \lim_{t \to 0} \frac{f(x+t,y,z,...)-f(x,y,z,...)}{t}$$ Geometricly, the partial derivative
+            repersents the tangent line parallel to one of the axis (x-axis in here).</p>
+            <h3>1.2.Derivation</h3>
+            <p>let's think about what's the meaning of best fit line. Best means optimization function, fit means minimum of <b>error</b>.<br>
+                As we know, the general linear function is:
+                $$y=Ax+B$$
+                And the each point is $$(x_i,y_i)$$
+                Therefore we can constract a error functions such that $$f(A,B)=\sum [y(x_i)-y_i]^2$$
+                we need square because errors are always positive.
+                Therefore, to find the best fit line is to find minimum f(A,B).
+                similar to single varibel calculus, we need first derivative test to find the critical point. we use a horizontal plane to cut the function
+                 to let them tangent. In other word:
+                 $$\frac{\partial f}{\partial A}=0, \frac{\partial f}{\partial B}=0$$
+            </p>
+            <iframe scrolling="no"
+            src="https://www.geogebra.org/classic/muas6yav"
+            width="1000px"
+            height="600px"
+            style="border:0px;">
+            </iframe>
+            <p>However, you cannot distince max, min, or saddle point trough first derivative test, we should use second derivative test:
+                $$
+                D = 
+                \begin{bmatrix}
+                  \frac{\partial^2 f}{\partial A^2} & \frac{\partial^2 f}{\partial A \partial B} \\ 
+                  \frac{\partial^2 f}{\partial A \partial B}& \frac{\partial^2 f}{\partial B^2}
+                \end{bmatrix}
+                $$
+                <table class="center" style="width:300px;">
+                    <tr>
+                      <th>D&gt;0 </th> 
+                      <th>D=0 </th>
+                      <th>D&lt;0 </th>
+                    </tr>
+                    <tr>
+                      <td>fxx&gt;0, min;<br>
+                        fxx&lt;0, max</td>
+                      <td>test fail</td>
+                      <td>saddle point</td>
+                    </tr>
+                  </table>
+                <br>
+                however, it's too hard to do the second derivative test, and actually, it is the min.<br>
+                Please remember all of these, we will use these idea in the second example (more general).
+            </p>
+        <h2>2.Machine Learnng with Neutral Network</h2>
+        <iframe
+        src="https://playground.tensorflow.org/"
+        width="1000px"
+        height="600px"
+        style="border:0px;">
+        </iframe>
+        <p>
+            Let's face this <strong>huge</strong> problem.
+            It's seems quite hard, however, it's quite similar to the example above.
+            We can set the error function E such that E has parameter of neurons, and the mapping is neuron to neuron instead of point to line.
+            In other word, we want to have a function g(i,j) such that:
+            $$g_{i,j}=\sum_{l=1}^{n}w_{l,i,j} \cdot n_{l,j-1} - b_{i,j}$$ $$ h(x) = \frac{L}{1 + e^{-k(x-x_0)}} $$ $$ n_{i,j} = hg_{i,j}$$ 
+            Where h is logistic function to make sure that hg output in [0,1] 
+            Each of these g is one of the line shown in website above, and we want a function G is combination of g(i,j) s which mapping from initial to the output.
+            And E(w(l,j-1,i),b(i,j)) is difference of target and G(n(k,1)). however, in this case, I will get a function of thousands, millions, billions variable
+            , and you have to take thousands, millions, billions of derivatives and do the second derivative test, it's impossible!! However, we can do another 
+            approach, which computer normal does this way: valter w(i,j) to the direction that E goes smally. Using this approach, we will most likely get a local min.
+            Even though it's not a global min, it's good enough. <br>
+            That's the key idea of machine learning.
+        </p>
+    <br>
+    <hr>
+    <footer>
+        <p><em>Author: Kristopher Zhao<br>
+            <a href="mailto:350111704@gapps.yrdsb.ca">350111704@gapps.yrdsb.ca</a></em></p>
+    </footer>
+    </div>
+</body>
+</html>
